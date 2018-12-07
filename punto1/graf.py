@@ -18,9 +18,14 @@ for i in range(M):
     plt.title('Num ='+str(len(data))+' stdev='+str(std_est) + ' mu='+str(mean_est), alpha=0.6)
     plt.savefig('histograms')
 
-B= (N/(M-1))*np.sum((np.mean(means)-means)**2)
-W=(1/M)*np.sum(stdvs**2)
+B=np.ones(N)
+W=np.ones(N)
+figue1=plt.figure()
+for i in range(1,N): 
+    B[i]= (i/(M-1))*np.sum((np.mean(means[:i])-means[:i])**2)
+    W[i]=(1/M)*np.sum(stdvs[:i]**2)
 
 V= ((N-1)/N)*W + ((M+1)/(M*N))* B
 
-print('El factor Gelman-Rubin es: ',V)
+plt.plot(V)
+figue1.savefig('gr.png')
